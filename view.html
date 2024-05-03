@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Recipe Manager</title>
+    <style>
+
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 20px;
+        background-color: #f5f5f5;
+      }
+      h1,
+      h2,
+      h3 {
+        color: #333;
+      }
+
+      /* 폼 스타일 */
+      form {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      }
+
+      label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+      }
+
+      input[type="text"],
+      textarea {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+        box-sizing: border-box;
+        margin-bottom: 10px;
+      }
+
+      button[type="submit"] {
+        background-color: #4caf50;
+        color: #fff;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 3px;
+        cursor: pointer;
+      }
+
+      button[type="submit"]:hover {
+        background-color: #45a049;
+      }
+
+      /* 레시피 목록 스타일 */
+      #recipeList {
+        margin-top: 20px;
+      }
+
+      #recipeList div {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+      }
+
+      #recipeList button {
+        background-color: #f44336;
+        color: #fff;
+        padding: 5px 10px;
+        border: none;
+        border-radius: 3px;
+        cursor: pointer;
+        float: right;
+      }
+
+      #recipeList button:hover {
+        background-color: #d32f2f;
+      }
+
+      /* 이미지 미리보기 스타일 */
+      #imagePreview img {
+        max-width: 100%;
+        height: auto;
+        display: block;
+        margin-bottom: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>레시피</h1>
+    <hr />
+    <form id="addRecipeForm">
+      <h2>요리 이름</h2>
+      <label for="recipeName">글 제목:</label>
+      <input
+        type="text"
+        id="recipeName"
+        name="recipeName"
+        required
+      /><br /><br />
+      <label for="recipeIngredients">재료</label><br />
+      <textarea
+        id="recipeIngredients"
+        name="recipeIngredients"
+        rows="4"
+        cols="50"
+        required
+      ></textarea
+      ><br /><br />
+      <h2>조리법</h2>
+      <!-- 이미지 업로드 폼 -->
+      <form id="uploadForm" enctype="multipart/form-data">
+        <input type="file" id="imageInput" accept="image/*" required />
+        <button type="submit">이미지 업로드</button>
+      </form>
+      <!-- 이미지 미리보기를 표시할 공간 -->
+      <div id="imagePreview"></div>
+      <!-- 레시피 조리법 입력란 -->
+      <textarea
+        id="recipeInstructions"
+        name="recipeInstructions"
+        rows="4"
+        cols="50"
+        required
+      ></textarea
+      ><br /><br />
+      <button type="submit">추가</button>
+    </form>
+    <hr />
+
+    <!-- 기존 레시피 목록 -->
+    <div id="recipeList">
+      <h2>레시피 목록</h2>
+      <!-- 이 공간에 기존 레시피가 표시됩니다-->
+    </div>
+
+    <script>
+      // 폼 제출 및 기존 레시피 표시를 처리하는 JavaScript
+      const addRecipeForm = document.getElementById("addRecipeForm");
+      const recipeList = document.getElementById("recipeList");
+
+      addRecipeForm.addEventListener("submit", function (event) {
+        event.preventDefault(); // 폼 제출 방지
+
+        // 폼 데이터 가져오기
+        const recipeName = document.getElementById("recipeName").value;
+        const recipeIngredients =
+          document.getElementById("recipeIngredients").value;
+        const recipeInstructions =
+          document.getElementById("recipeInstructions").value;
+
+        // 새로운 레시피 요소 생성
+        const newRecipe = document.createElement("div");
+        newRecipe.innerHTML = `
+                <h3>${recipeName}</h3>
+                <p><strong>재료:</strong> ${recipeIngredients}</p>
+                <p><strong>조리법:</strong> ${recipeInstructions}</p>
+                <button onclick="deleteRecipe(this)">삭제</button>
+            `;
+
+        // 새로운 레시피를 레시피 목록에 추가
+        recipeList.appendChild(newRecipe);
+
+        // 폼 필드 지우기
+        addRecipeForm.reset();
+      });
+
+      function deleteRecipe(button) {
+        // 레시피 요소 삭제
+        const recipe = button.parentNode;
+        recipe.parentNode.removeChild(recipe);
+      }
+
+      // 이미지 업로드 및 미리보기 기능 추가
+      const uploadForm = document.getElementById("uploadForm");
+      const imageInput = document.getElementById("imageInput");
+      const imagePreview = document.getElementById("imagePreview");
+
+      uploadForm.addEventListener("submit", function (event) {
+        event.preventDefault(); // 폼 제출 방지
+
+        const file = imageInput.files[0]; // 선택된 파일 가져오기
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = function (event) {
+            const imageUrl = event.target.result;
+            const img = document.createElement("img");
+            img.src = imageUrl;
+            img.alt = "Uploaded Image";
+            imagePreview.innerHTML = ""; // 이미지 미리보기를 갱신하기 위해 이전 이미지 제거
+            imagePreview.appendChild(img);
+          };
+          reader.readAsDataURL(file); // 파일을 읽어 이미지 데이터 URL로 변환
+        } else {
+          alert("이미지를 선택하세요.");
+        }
+      });
+    </script>
+  </body>
+</html>
