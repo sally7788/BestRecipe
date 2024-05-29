@@ -77,4 +77,22 @@ router.delete("/", (req, res) => {
   res.json({ message: "스크랩이 성공적으로 삭제되었습니다." });
 });
 
+// 스크랩 전체 삭제 API
+router.delete("/all", (req, res) => {
+  const { userId } = req.body;
+
+  if (!userId) {
+    return res.status(400).json({ error: "userId를 제공해야 합니다." });
+  }
+
+  const scrapData = JSON.parse(fs.readFileSync(SCRAP_DATA, "utf8"));
+
+  // userId에 해당하는 모든 스크랩 항목 제거
+  const newScrapData = scrapData.filter((item) => item.userId !== userId);
+
+  fs.writeFileSync(SCRAP_DATA, JSON.stringify(newScrapData, null, 2));
+
+  res.json({ message: "스크랩이 성공적으로 삭제되었습니다." });
+});
+
 export default router;

@@ -133,3 +133,30 @@ async function onClickDeleteScrap(iconElement, float = false) {
     console.error("스크랩 삭제 중 오류 발생:", error);
   }
 }
+
+async function onClickDeleteAllScrap() {
+  try {
+    const userId = parseInt(localStorage.getItem("userId"));
+    const response = await fetch("/api/scrap/all", {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ userId }),
+    });
+
+    if (response.ok) {
+      const result = await response.json();
+      console.log("스크랩 비우기 성공:", result);
+
+      closeScrapDialog();
+      localStorage.setItem("deleteAllScrap", 1);
+      location.reload();
+    } else {
+      const error = await response.json();
+      console.error("스크랩 비우기 실패:", error);
+    }
+  } catch (error) {
+    console.error("스크랩 비우기 중 오류 발생:", error);
+  }
+}

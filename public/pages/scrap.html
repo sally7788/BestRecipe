@@ -46,7 +46,10 @@
     <div class="main_content">
         <header class="main_content_header" style="margin-top:28px;">
             <h1>언젠간 해먹을거야 내 스크랩 리스트...</h1>
-            <div onclick="isLogin('/writeRecipe')" class="more">레시피 작성하기</div>
+            <div class="scrap_button_wrapper">
+                <div id="delete_scrap" onclick="openScrapDialog();" class="more">스크랩 비우기</div>
+                <div onclick="isLogin('/writeRecipe')" class="more">레시피 작성하기</div>
+            </div>
         </header>
         <div id="recipes" class="main_content_box cyber_main_content_box">
             <div id="no_result">
@@ -79,6 +82,15 @@
         <h2>소셜 로그인을 통해 빠르게 저희 서비스를 이용해보세요!</h2>
         <img class="isLogin_dialog_login_button" onclick="kakaoLogin();" src="/images/kakao_login_large_wide.png"
             alt="kakao_login" />
+    </dialog>
+
+    <!-- 스크랩 비우기 다이얼로그 -->
+    <dialog id="delete_scrap_dialog" onclose="closeScrapDialog();">
+        <button class="close_button" onclick="closeScrapDialog();">×</button>
+        <img class="isLogin_dialog_logo" src="/images/img_search.png" alt="logo">
+        <h1>정말로 스크랩을 비우실건가요..?</h1>
+        <h2>한번 비우면 다시는 되돌리기 힘들어요 ㅠㅠ</h2>
+        <button onclick="onClickDeleteAllScrap();" class="real_delete_button">말리지마 비울거야!</button>
     </dialog>
 </body>
 

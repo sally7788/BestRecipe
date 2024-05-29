@@ -57,6 +57,13 @@ function openDialog() {
   document.body.style.overflow = "hidden";
 }
 
+// 스크랩 다이얼로그 열기
+function openScrapDialog() {
+  const dialog = document.getElementById("delete_scrap_dialog");
+  dialog.showModal();
+  document.body.style.overflow = "hidden";
+}
+
 // 로그인 필요 다이얼로그 닫기
 function closeDialog() {
   const dialog = document.getElementById("isLogin_dialog");
@@ -64,14 +71,29 @@ function closeDialog() {
   document.body.style.overflow = "";
 }
 
+// 스크랩 다이얼로그 닫기
+function closeScrapDialog() {
+  const dialog = document.getElementById("delete_scrap_dialog");
+  dialog.close();
+  document.body.style.overflow = "";
+}
+
 // 토스트 메시지 관리
 document.addEventListener("DOMContentLoaded", () => {
-  const [LOGIN, LOGOUT, POST_RECIPE, UPDATE_RECIPE, DELETE_RECIPE] = [
+  const [
+    LOGIN,
+    LOGOUT,
+    POST_RECIPE,
+    UPDATE_RECIPE,
+    DELETE_RECIPE,
+    DELETE_ALL_SCRAP,
+  ] = [
     "login",
     "logout",
     "postRecipe",
     "updateRecipe",
     "deleteRecipe",
+    "deleteAllScrap",
   ];
   if (localStorage.getItem(LOGIN)) {
     toast.success("성공적으로 로그인 되었습니다!");
@@ -92,6 +114,10 @@ document.addEventListener("DOMContentLoaded", () => {
   if (localStorage.getItem(DELETE_RECIPE)) {
     toast.success("성공적으로 레시피를 삭제했습니다!");
     localStorage.removeItem(DELETE_RECIPE);
+  }
+  if (localStorage.getItem(DELETE_ALL_SCRAP)) {
+    toast.success("성공적으로 모든 스크랩을 삭제했습니다!");
+    localStorage.removeItem(DELETE_ALL_SCRAP);
   }
 });
 
