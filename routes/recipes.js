@@ -14,7 +14,6 @@ if (!fs.existsSync(imagesDir)) {
   fs.mkdirSync(imagesDir, { recursive: true });
 }
 
-
 //multer로 파일 저장 설정
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {

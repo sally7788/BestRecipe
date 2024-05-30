@@ -7,7 +7,7 @@ if (location.pathname === "/") {
       const recipeCards = document.querySelectorAll(
         "#youtube_recipes .recipe-card"
       );
-      
+
 
       data.forEach((item, index) => {
         const recipeCard = recipeCards[index];
@@ -109,8 +109,14 @@ if (location.pathname === "/youtubeRecipe") {
 }
 
 async function onClickSearchYoutube() {
+  // 입력 필드에서 검색어를 가져옵니다.
   const keyword = document.getElementById("search_youtube_input").value;
-  location.href = `/youtubeRecipe?q=${keyword}`;
+  
+  // 검색어 뒤에 "레시피"를 추가합니다.
+  const keywordWithRecipe = `${keyword}레시피`;
+
+  // 수정된 링크로 이동합니다.
+  location.href = `/youtubeRecipe?q=${encodeURIComponent(keywordWithRecipe)}`;
 }
 
 function onKeyDownEnterYoutube(event) {

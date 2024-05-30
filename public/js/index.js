@@ -10,6 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
+// 토스트 메시지
 function toast(type, options) {
   const defaultOptions = {
     duration: 3000,
