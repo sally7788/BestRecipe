@@ -37,7 +37,6 @@ function kakaoLogin() {
 function logout() {
   localStorage.removeItem("userId");
   localStorage.removeItem("nickname");
-  // 쿠키 전체 삭제 로직 추가해야함
   document.querySelector(".login").style.display = "block";
   document.querySelector(".logout_wrapper").style.display = "none";
   document.querySelector(".welcome").textContent = "";

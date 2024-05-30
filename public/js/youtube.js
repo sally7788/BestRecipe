@@ -7,6 +7,7 @@ if (location.pathname === "/") {
       const recipeCards = document.querySelectorAll(
         "#youtube_recipes .recipe-card"
       );
+      
 
       data.forEach((item, index) => {
         const recipeCard = recipeCards[index];

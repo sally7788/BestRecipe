@@ -1,4 +1,5 @@
 if (location.pathname === "/") {
+  
   document.addEventListener("DOMContentLoaded", async () => {
     try {
       const userId = localStorage.getItem("userId");

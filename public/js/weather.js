@@ -1,6 +1,7 @@
 let weather; // 날씨 전역 변수
 let weatherError = undefined;
 
+
 document.addEventListener("DOMContentLoaded", async () => {
   // 현재 위치정보 가능 여부
   if (navigator.geolocation) {
