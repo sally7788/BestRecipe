@@ -37,6 +37,7 @@ function kakaoLogin() {
 function logout() {
   localStorage.removeItem("userId");
   localStorage.removeItem("nickname");
+  
   document.querySelector(".login").style.display = "block";
   document.querySelector(".logout_wrapper").style.display = "none";
   document.querySelector(".welcome").textContent = "";
